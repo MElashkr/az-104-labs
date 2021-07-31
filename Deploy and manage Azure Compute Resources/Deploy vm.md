@@ -25,7 +25,7 @@ fx. username: 12.134.45\username
 - If you restart the vm, the public-ip address remains as it is
 - If you stop/deallocate the vm, the public-ip will be lost
 
-** Build Linux webserv VM**
+**Build Linux webserv VM**
 - use putty to Connect to vm
 - **insall iis**<br/>
 // update package index<br/>
@@ -68,6 +68,24 @@ There are different snapshot types:
 - Crash Consistent
 
 **Lab for backup Service for VM**
-- During creating the vm, Enable a backup(all of backup data will be stored in recovery service vault)
+- During creating the vm, it is possible to Enable a backup(all of backup data will be stored in recovery service vault) or after creatting vm
 - Backup policy: the configuration is going to be define here
+
+**Recovery Service Vault**: is used for backup or site recovery(vm replication)
+
+**Enable Site Recovery or Disaster Recovery for VM**
+- The site recovery service extension is installed on source vm
+- Continous replication is occuring via the cache storage account
+- when the data is processed in the target region, crash consistent recover points are generated every 5 minutes
+Info: All of the data on the vm are sent to cache storage account, and the data are transfered in the target region
+Once you have a retention point on the target region, you can do failover
+There two typs of recovery points:
+- Crash consistent: if you recovery to a near time in the past, then you need crash consistent snapshot
+- Applications consistent: if you need to recovery all apps at certain time
+
+**Availability set** 
+- Protect your infrastructure from update or maintaince on physical server of MS.
+- The only to assign availablity set to vm is during the creation of vm. It is not possible to assign an existing vm with an availability set
+- There is max 3 fault-domains and max 20 update domains
+
 
