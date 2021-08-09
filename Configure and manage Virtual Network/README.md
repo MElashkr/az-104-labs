@@ -40,5 +40,32 @@ When man needs to path specific requests(on specific port) to pass it to a loadb
 Info: you choose the port which a request is comming from outside and and adapt it to a cusom prot mapping and choose target port of vm<br/>
 Info: it is still required, that you allow RDP-Protocol on port 3389 on the vm in Network section.
 
+## Application Gateway
 
+Frontend-IP -> (App-Gateway/web-app firewall) -> Http(s)-Listner -> Rules -> (web-app on azure or on-premise)
+Features:
+- This service is as web traffic loadbalancer that is used to distribute traffic to web apps. 
+- It is based on layer-7 on OSI.
+- It supports SSL(Secure-Socket Layer Termination) (App-Gateway manages the communication for you)
+- It is possible to Auto-Scale for App-Gateway resources and scale-up or scale-down based on traffic load pattern
+- It is possible to enable Web-Firewall
+- It is possible to enable session-Affinity. If the state of the user session will be saved on the server, then can be useful feature
+
+Components of App-Gateway:
+- Frontend-IP
+- Http(s) Listner: that is logical entity that checks incomming connection requests. There can be multiple Listners attached to App-Gateway
+  - There are 2 typs
+    - Basic: the Listner listen to a single domain
+    - Multiple side: the Listner listen to multiple domains
+-  Routing roles: route traffic from the listner to backend-pool
+  - There are two types of routing-pools
+    - Basic: all requests will be routed to backend pool directly
+    - Path: all requests will be routed to backend pool based on the URL
+- Backend-pools: These can be Network-Interface Cards, Virtual machine Scale set, Public/Internal IP-Addresses, or Backend such as App-Service
+- Health-Probs: how the App-Gateway will monitor the health of resources on the backend-pool
+
+It is reachable through FrontendIP-Address. You manage traffic by defining Http/Https Listner and rules to route traffic to different endpoints(web-app on vm, web-app on Azure app service or web-app running on on-premise). It is important to have "Empty subnet" as a part of virtual network.
+If you deploy App-Gateway, then will be deployed on Virtual network. <br/>
+It is possible to enable web-app firewall to protect the app form corss-site scripting attack.<br/>
+One other important thing, it is possible to route traffic based on URL (/videos, /images). Traffic will be routed based on the requests
 
