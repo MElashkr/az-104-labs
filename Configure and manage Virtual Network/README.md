@@ -84,3 +84,16 @@ Azure Loadbalancer will look only at transport layer(Layer 4)
 Info: Wireshark tool to check and see the data packet that will be transported
 
 It is possible to route monitor traffic which comming in/out from App-Gateway by Metric Session or Diagnostic settings. Man can anaylse Logs and send them to Log Analytics/Storage Account/Event hub 
+
+## Virtual Network Peering
+If you have 2 virtual network in 2 different regions and you want to connect each other, then you can bind them through network peering.
+Once you enable virtual network peering between two virtual networks, the virtual machines can then communicate via their private IP addresses across the peering connection.
+
+## Connecto to Azure vNet
+**Point to site vpn-connection**
+If you need to connect a workstation/clinet machine(on-premise) to virtual network on azure via private ip-address.<br/>
+You need for connection:
+- Root certificate(or self-signed certificate)
+- User certificate with a private key & with public key
+- Virtual network gateway
+  - Gateway subnet
