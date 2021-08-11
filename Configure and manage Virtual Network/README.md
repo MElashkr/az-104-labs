@@ -53,7 +53,7 @@ Features:
 
 Components of App-Gateway:
 - Frontend-IP
-- Http(s) Listner: that is logical entity that checks incomming connection requests. There can be multiple Listners attached to App-Gateway
+- Http(s) Listner: that is logical entity that checks incomming connection requests. If a request is comming to a Listner, then it redirects this request to backend-pool. There can be multiple Listners attached to App-Gateway
   - There are 2 typs
     - Basic: the Listner listen to a single domain
     - Multiple side: the Listner listen to multiple domains
@@ -69,3 +69,18 @@ If you deploy App-Gateway, then will be deployed on Virtual network. <br/>
 It is possible to enable web-app firewall to protect the app form corss-site scripting attack.<br/>
 One other important thing, it is possible to route traffic based on URL (/videos, /images). Traffic will be routed based on the requests
 
+**Azure Loadbalancer vs Application Gateway**
+Loadbalancer will look at traffic based on Transport Layer(Layer 4), and App-Gateway will look at traffic based on Application Layer(Layer 7)
+OSI-Layers:
+7. Application Layer
+6. Presentation Layer
+5. Session Layer
+4. Transport Layer(TCP-Protocol)
+3. Network Layer(Hand-shake will be happen between source and destination machine)
+2. Data Link Layer
+1. Physical Layer
+Data packets will be transport on the physical layer. Data will be converted to packetes and will be transported from source machine to destination machine.
+Azure Loadbalancer will look only at transport layer(Layer 4)
+Info: Wireshark tool to check and see the data packet that will be transported
+
+It is possible to route monitor traffic which comming in/out from App-Gateway by Metric Session or Diagnostic settings. Man can anaylse Logs and send them to Log Analytics/Storage Account/Event hub 
