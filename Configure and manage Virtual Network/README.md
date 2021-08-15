@@ -90,10 +90,65 @@ If you have 2 virtual network in 2 different regions and you want to connect eac
 Once you enable virtual network peering between two virtual networks, the virtual machines can then communicate via their private IP addresses across the peering connection.
 
 ## Connecto to Azure vNet
-**Point to site vpn-connection**
+**Point to site Vpn-connection**
 If you need to connect a workstation/clinet machine(on-premise) to virtual network on azure via private ip-address.<br/>
 You need for connection:
 - Root certificate(or self-signed certificate)
 - User certificate with a private key & with public key
 - Virtual network gateway
   - Gateway subnet
+
+Info: You need to have a root certificate in place that needs to be uploaded to Azure for the point-to-site connection
+A client certificate needs to be generated from the root certificate. This client certificate needs to be on each client computer that needs to connect to the Azure virtual network via the Point-to-Site connection.
+
+**Site to Site Vpn-Connection**
+
+You need some things:
+- On-Premise
+  - Cisco router or software device on on-premise enviroment to route data to azure-network
+  - Adress space
+- On Azure
+  - Virtual network with adress-space
+  - Adress space for vm
+  - (step 1) Gateway subnet (this is required by implementing vnet-gateway)
+  - (step 2) Virtual Network Gateway to establish a secure site-to-site connection 
+  - (step 3)Local Gateway is a presention of on-premise data center routing device
+Info: The Site-to-Site VPN connection uses an IPSec tunnel to encrypt the traffic.
+
+**Site to site VPN forced tunneling**: If there are any request from on-cloud to on-premise, then the request should be go through secure tunnel from azure to on-premise then to the internet
+
+## Express route
+If you connect on-premise network with azure virtual network, then all traffic will go throug Micrososft Backbone Network
+**Express route direct** Customers can connect directely to microsoft global network at different peering locations across the world
+
+**There are different types of billing:**
+- Unlimited data: here billing is based on monthly fee
+- Metered data: all in-bound data is free and you charge for outbound data
+- Premium add-on: Express route direct can be created in any region and can connect to resource across any other region in the world
+
+## Network monitoring
+**Network Watcher**: this service enables tools to monitor, diagnose, view metrics, and enable/disable logs for resources in azure virtual network. It is used to monitor tool for your infrastructure as a service and not intended to to monitor PaaS
+Tools of NWatcher:
+- Connection monitor: supports azure and hyprid setup as well. Connectivity checks based on Http, Tcp, Icmp. It monitors the connection between 2 endpoints( f.x source and destination vms)
+  - It is important to add/install the extension "Network watcher agent for windows" to the vm, this agent sends the information to network watcher
+- IP flow protocol: detecting traffic filtering problems
+  - check if a packet has been allowed or denied access to or from vm
+  - check packet based on protocol(Tcp, Udp), local and remote ip address and port number
+- Next Hub: Detecting vm routing problems
+  - check if the traffic is being send to the destination based on the route associated with network interface 
+- Connection troubleshoot: diagnose connectivity
+  - check connectivity between vms or form vm to domain, URI, or Ipv4
+- Packet capture: capture traffic from/to vm. You save the packets in file on vm or in storage file and anaylse it with wireshark tool
+- Network security group logging: gives more info on the ingress or egress ip-traffic flow via network security group
+- Traffic analysis: it provides visiblility into user and application activity
+  - it provides a visual representation of data that are collected from NSG flow logs
+-NSG Flow logs: it collects IP-flows going in/out the nsg, it operates at layer 4
+  - there are written in json format
+  - NSG(Network security group) is like a firewall for you vm
+  - choose Network Watcher -> NSG flow logs -> enable NGS flow logs on NSG of any vm
+
+## User defined route
+if you want to route traffic in certian flow between vms. We need to install a role "Routing service" on the win-server vm to forward the traffic
+
+**Jump Sever or Bastion Host**: it is used to access a vm through a vNET. The idee, yor create a jump server(with a public-ip) in subnet with public-ip to forward the traffic to another vm(with private-ip) in another subnet. That is more secure
+
