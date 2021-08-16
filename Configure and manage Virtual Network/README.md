@@ -152,3 +152,28 @@ if you want to route traffic in certian flow between vms. We need to install a r
 
 **Jump Sever or Bastion Host**: it is used to access a vm through a vNET. The idee, yor create a jump server(with a public-ip) in subnet with public-ip to forward the traffic to another vm(with private-ip) in another subnet. That is more secure
 
+## Azure Firewall
+**In data center**
+It is used to filter traffic which flow in/out from internet to vms. It is used to protect you workstation and servers from malicious attack. Firewall might be device or software installed in a seperate machine.
+
+**Azure Firewall
+- you can deploy azure firewall instances across two or more avaliablity zones to get high sla 99.99%
+- you can filter traffic based on full domain name
+- man can create network filtering rules, based on source and destination ip-address
+- it has build-in thread intelligence 
+
+Lab Steps:
+- Step 1
+  - create vm with no inbount port and private ip-address
+  - create virtual network with 2 subnets, one for vm and the second for azurefirewal(with name "AzurefirewallSubnet" very important)
+  - deploy azure firewall: it needs to have a public-ip address and private ip-address(to commnicate with vm)
+- Step 2: create a route table and assing it to the subnet hosting vm
+- Step 3: how to connect the vm using NAT facility which it is avaliable to azure firewall
+- Step 4: create an application rule to allow traffic to the internet
+
+## Domain name system
+There DNS servers which have the domain names and their ip-addresses.
+The communication between your workstation and Server is going through network interface and ip-address
+**Private DNS zone:** it can be used to create dsn zone in azure and include or regiser any vms in manuel or automaically
+
+
