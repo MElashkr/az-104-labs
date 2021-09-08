@@ -88,4 +88,16 @@ There two typs of recovery points:
 - The only to assign availablity set to vm is during the creation of vm. It is not possible to assign an existing vm with an availability set
 - There is max 3 fault-domains and max 20 update domains
 
+**Azure Disk Encryption**
+You use ADE to encrypt a data on the disk of vm. You will need a key vault to encrypt and decrypt the data.
+By Creation you need:
+  - In "Access Policy" choose Azure Disk Encryption for volume encryption (VM will check if this policy enabled if yes it will create and use encrpytion key)
+  - Select permissions in created row data in list down (encrypt, decrypt, unwrap,...)
+  - After creating keyvault, run this cmd(this will encrypt you c and d drive or all drives) <br/>
+  cmd: az vm encryption enable -g azuredemo --name keyvm --disk-encryption-keyvault demovault9000 <br/>
+  Info: It takes around 15 minutes for execution. You have to see a lock-Symbole after execution
+
+**Azure Web App**
+Man deploy web apps by azure web app. If you use azure web app to deploy an app, then you need first **azure app service plan**. Azure Web App is as PaaS and can deploy many programming language(java, node js, c#,...).
+There are various azure service plan and pricing: here is more *[Info about pricing](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/)*
 
