@@ -61,11 +61,11 @@ It is possible to run powershel commands on vm by Azure-Portal
 Man can do a backup of vm-file or Disk, and this backup will be stored in Azure Recovery Vault
 There are Retention Time and Recovery Point
 - Retention time captures how long the data can be retained (f.x one week or one month)
-- Recovery point is to which date/time can the data be recovered
-There are different snapshot types:
-- Application consistent
-- File System consistent
-- Crash Consistent
+- Recovery point is to which date/time can the data be recovered<br/>
+There are different snapshot types:<br/>
+  - Application consistent
+  - File System consistent
+  - Crash Consistent
 
 **Lab for backup Service for VM**
 - During creating the vm, it is possible to Enable a backup(all of backup data will be stored in recovery service vault) or after creatting vm
